@@ -1,41 +1,30 @@
-package com.dolapo.workflowapplication.controller;
+package com.dolapo.workflowapplication.service;
 
 import com.dolapo.workflowapplication.collection.WorkItem;
 import com.dolapo.workflowapplication.repository.WorkItemRepository;
-import com.dolapo.workflowapplication.response.ResponseModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 
-import javax.print.attribute.standard.Media;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/report")
-public class GenerateReport {
+@Service
+public class GenerateReportService {
+
+    private final WorkItemRepository workItemRepository;
 
     @Value("${jasper.report.file.path}")
     private String filePath;
 
-    @Value("${jasper.report.dest.path}")
-    private String destPath;
-
-    private final WorkItemRepository workItemRepository;
-
-    public GenerateReport(WorkItemRepository workItemRepository) {
+    public GenerateReportService(WorkItemRepository workItemRepository) {
         this.workItemRepository = workItemRepository;
     }
 
-    @GetMapping
-    public ResponseEntity<byte[]> generateReport(HttpServletResponse response){
+    public ResponseEntity<byte[]> generateReport(){
         byte[] downloadedFile;
         HttpHeaders headers = new HttpHeaders();
         try{
