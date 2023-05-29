@@ -1,7 +1,6 @@
 package com.dolapo.workflowapplication.publisher;
 
 import com.dolapo.workflowapplication.collection.WorkItem;
-import com.dolapo.workflowapplication.dto.WorkItemDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

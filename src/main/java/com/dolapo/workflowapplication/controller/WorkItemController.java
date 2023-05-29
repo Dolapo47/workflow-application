@@ -1,15 +1,11 @@
 package com.dolapo.workflowapplication.controller;
 
-import com.dolapo.workflowapplication.collection.WorkItem;
 import com.dolapo.workflowapplication.dto.WorkItemDto;
 import com.dolapo.workflowapplication.response.ResponseModel;
 import com.dolapo.workflowapplication.service.WorkItemService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
