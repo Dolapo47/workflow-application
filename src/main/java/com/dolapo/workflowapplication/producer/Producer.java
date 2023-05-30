@@ -1,4 +1,4 @@
-package com.dolapo.workflowapplication.publisher;
+package com.dolapo.workflowapplication.producer;
 
 import com.dolapo.workflowapplication.collection.WorkItem;
 import org.slf4j.Logger;

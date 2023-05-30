@@ -4,6 +4,8 @@ import com.dolapo.workflowapplication.collection.WorkItem;
 import com.dolapo.workflowapplication.repository.WorkItemRepository;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ import java.util.Map;
 
 @Service
 public class GenerateReportService {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenerateReportService.class);
     private final WorkItemRepository workItemRepository;
 
     @Value("${jasper.report.file.path}")
@@ -42,6 +44,7 @@ public class GenerateReportService {
                     .build();
             headers.setContentDisposition(build);
         }catch(Exception e){
+            LOGGER.error("An error occurred while generating report", e);
             return null;
         }
         return new ResponseEntity<>(downloadedFile, headers, HttpStatus.OK);
