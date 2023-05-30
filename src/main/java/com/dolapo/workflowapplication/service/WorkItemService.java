@@ -31,7 +31,7 @@ public class WorkItemService {
         WorkItem workItem = new WorkItem();
         if(workItemDto.getValue() < 1 || workItemDto.getValue() > 10){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(
-                    new ResponseModel("400", "Value must be between the range of 1 and 10", null)
+                    new ResponseModel("422", "Value must be between the range of 1 and 10", null)
             );
         }
         try{
@@ -47,12 +47,12 @@ public class WorkItemService {
         }catch(InterruptedException e){
             LOGGER.info("An interrupted Exception occurred", e);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(
-                    new ResponseModel("400", "Exception occurred due to thread interruption", null)
+                    new ResponseModel("422", "Exception occurred due to thread interruption", null)
             );
         } catch(Exception e){
             LOGGER.info("An interrupted Exception occurred", e);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(
-                    new ResponseModel("400", e.getMessage(), null)
+                    new ResponseModel("422", e.getMessage(), null)
             );
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(
