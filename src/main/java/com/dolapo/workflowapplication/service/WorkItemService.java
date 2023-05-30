@@ -35,7 +35,7 @@ public class WorkItemService {
             );
         }
         try{
-            id = "work-item"+System.currentTimeMillis();
+            id = "work-item-"+System.currentTimeMillis();
             workItem.setId(id);
             workItem.setValue(workItemDto.getValue());
             workItem.setStatus("Processing");
