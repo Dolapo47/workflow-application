@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/report")
+@RequestMapping("/generate")
 public class GenerateReportController {
 
     private final GenerateReportService generateReportService;
@@ -16,7 +16,7 @@ public class GenerateReportController {
         this.generateReportService = generateReportService;
     }
 
-    @GetMapping
+    @GetMapping("/report")
     public ResponseEntity<byte[]> generateReport(){
         return generateReportService.generateReport();
     }

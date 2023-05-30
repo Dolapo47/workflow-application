@@ -2,10 +2,12 @@ package com.dolapo.workflowapplication.service;
 
 import com.dolapo.workflowapplication.collection.WorkItem;
 import com.dolapo.workflowapplication.dto.WorkItemDto;
-import com.dolapo.workflowapplication.publisher.Producer;
+import com.dolapo.workflowapplication.producer.Producer;
 import com.dolapo.workflowapplication.repository.WorkItemRepository;
 import com.dolapo.workflowapplication.response.ResponseModel;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class WorkItemService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WorkItemService.class);
     private final WorkItemRepository workItemRepository;
 
     private final Producer producer;
@@ -37,10 +40,12 @@ public class WorkItemService {
             producer.sendJsonMessage(workItem);
             Thread.sleep(workItem.getValue() * 10L);
         }catch(InterruptedException e){
+            LOGGER.info("An interrupted Exception occurred", e);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(
                     new ResponseModel("400", "Exception occurred due to thread interruption", null)
             );
         } catch(Exception e){
+            LOGGER.info("An interrupted Exception occurred", e);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(
                     new ResponseModel("400", e.getMessage(), null)
             );
@@ -54,6 +59,10 @@ public class WorkItemService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return workItemRepository.findAll(pageable);
     }
+    public Page<WorkItem> getWorkItemsByValue(int value, int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return workItemRepository.findWorkItemByValue(value, pageable);
+    }
 
     public ResponseEntity<ResponseModel> getWorkItem(String workItemId) {
         Optional<WorkItem> savedWorkItem;
@@ -64,6 +73,7 @@ public class WorkItemService {
                         new ResponseModel("404", "Work item not found", null));
             }
         }catch(Exception e){
+            LOGGER.info("An interrupted Exception occurred", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     new ResponseModel("500", "An error occurred", null)
             );
@@ -82,6 +92,7 @@ public class WorkItemService {
             }
             workItemRepository.delete(savedWorkItem.get());
         }catch(Exception e){
+            LOGGER.info("An interrupted Exception occurred", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     new ResponseModel("500", "An error occurred", null)
             );
