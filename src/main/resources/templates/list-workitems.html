@@ -21,8 +21,9 @@
 <body>
     <div class="container">
         <div class="navbar-top">
+
             <span>
-                <a th:href="@{/work-items/get}">
+                <a th:href="@{'/work-items/get/'+${value}}">
                 <button class="btn btn-secondary">Refresh Page</button>
                 </a>
         </span>
@@ -51,13 +52,13 @@
         Total Items: [[${totalItems}]] : Page [[${page}]] of [[${totalPages}]]
         &nbsp; &nbsp; - &nbsp;
         <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-            <a th:href="@{'get?page='+ ${i}}">
+            <a th:href="@{'?page='+ ${i}}">
                 <button class="btn btn-secondary">[[${i}]]</button>
             </a>
 
             &nbsp; &nbsp;
         </span>
-        <a th:href="@{/generate/report}" target="_blank">
+        <a th:href="@{'/generate/report/'+${value}}" target="_blank">
             <button class="btn btn-secondary">Download Report</button>
         </a>
     </footer>

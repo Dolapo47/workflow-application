@@ -26,11 +26,11 @@ public class GenerateReportService {
         this.workItemRepository = workItemRepository;
     }
 
-    public ResponseEntity<byte[]> generateReport(){
+    public ResponseEntity<byte[]> generateReport(int value){
         byte[] downloadedFile;
         HttpHeaders headers = new HttpHeaders();
         try{
-            List<WorkItem> workItems = workItemRepository.findAll();
+            List<WorkItem> workItems = workItemRepository.findWorkItemByValue(value);
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("workItem", "Work Items");
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(workItems);

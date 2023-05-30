@@ -33,6 +33,7 @@ public class WebWorkItemController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("totalPages", workItems.getTotalPages());
         model.addAttribute("totalItems", workItems.getTotalElements());
+        model.addAttribute("value", value);
         return "list-workitems";
     }
 }
