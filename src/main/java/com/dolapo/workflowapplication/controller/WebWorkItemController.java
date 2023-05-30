@@ -26,7 +26,7 @@ public class WebWorkItemController {
         }
         --page;
 
-//        Page<WorkItem> workItems = workItemService.getWorkItems(page, pageSize);
+
         Page<WorkItem> workItems = workItemService.getWorkItemsByValue(value, page, pageSize);
         model.addAttribute("workItems", workItems);
         model.addAttribute("page", ++page);

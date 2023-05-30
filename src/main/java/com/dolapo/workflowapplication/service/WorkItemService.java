@@ -29,6 +29,11 @@ public class WorkItemService {
     public ResponseEntity<ResponseModel> save(WorkItemDto workItemDto) {
         String id = "";
         WorkItem workItem = new WorkItem();
+        if(workItemDto.getValue() < 1 || workItemDto.getValue() > 10){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(
+                    new ResponseModel("400", "Value must be between the range of 1 and 10", null)
+            );
+        }
         try{
             id = "work-item"+System.currentTimeMillis();
             workItem.setId(id);
